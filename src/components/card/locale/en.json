@@ -1,0 +1,10 @@
+{
+  "card": {
+    "readMore": "Read More",
+    "learnMore": "Learn More",
+    "viewDetails": "View Details",
+    "noData": "No data available",
+    "loading": "Loading...",
+    "error": "Failed to load data"
+  }
+}

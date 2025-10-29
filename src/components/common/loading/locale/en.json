@@ -1,0 +1,11 @@
+{
+  "loading": {
+    "default": "Loading...",
+    "pleaseWait": "Please wait",
+    "processing": "Processing...",
+    "fetching": "Fetching data...",
+    "saving": "Saving...",
+    "uploading": "Uploading...",
+    "deleting": "Deleting..."
+  }
+}

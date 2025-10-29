@@ -1,0 +1,45 @@
+{
+  "home": {
+    "hero": {
+      "title": "Build Your Next Project Faster",
+      "subtitle": "A production-ready Next.js boilerplate with authentication, payments, and more",
+      "cta": {
+        "primary": "Get Started",
+        "secondary": "View Documentation"
+      }
+    },
+    "features": {
+      "title": "Everything You Need",
+      "subtitle": "All the tools and integrations to build and scale your application",
+      "authentication": {
+        "title": "Authentication",
+        "description": "Secure authentication with Better Auth, supporting email/password and social providers"
+      },
+      "payments": {
+        "title": "Payments",
+        "description": "Integrated payment processing with Polar for subscriptions and one-time payments"
+      },
+      "database": {
+        "title": "Database",
+        "description": "PostgreSQL with Drizzle ORM for type-safe database operations"
+      },
+      "storage": {
+        "title": "File Storage",
+        "description": "Cloudflare R2 integration for scalable object storage"
+      },
+      "email": {
+        "title": "Email",
+        "description": "Transactional emails with Resend for user notifications and updates"
+      },
+      "monitoring": {
+        "title": "Monitoring",
+        "description": "Error tracking and performance monitoring with Sentry"
+      }
+    },
+    "cta": {
+      "title": "Ready to Get Started?",
+      "subtitle": "Join thousands of developers building with our boilerplate",
+      "button": "Start Building Today"
+    }
+  }
+}

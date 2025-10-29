@@ -1,0 +1,23 @@
+{
+  "sidebar": {
+    "navigation": "Navigation",
+    "menu": {
+      "dashboard": "Dashboard",
+      "analytics": "Analytics",
+      "projects": "Projects",
+      "tasks": "Tasks",
+      "team": "Team",
+      "settings": "Settings",
+      "help": "Help & Support"
+    },
+    "toggle": {
+      "expand": "Expand sidebar",
+      "collapse": "Collapse sidebar"
+    },
+    "footer": {
+      "version": "Version",
+      "documentation": "Documentation",
+      "support": "Support"
+    }
+  }
+}

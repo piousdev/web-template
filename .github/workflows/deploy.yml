@@ -1,0 +1,139 @@
+# Continuous Deployment Workflow for Fly.io
+# Automatically deploys to Fly.io when changes are pushed to main branch
+#
+# Prerequisites:
+# 1. Create a Fly.io account and install flyctl
+# 2. Run: fly auth login
+# 3. Run: fly launch (follow prompts to create app)
+# 4. Generate deploy token: fly tokens create deploy -x 999999h
+# 5. Add FLY_API_TOKEN to GitHub repository secrets (Settings > Secrets > Actions)
+#
+# Secrets required:
+# - FLY_API_TOKEN: Fly.io API token for deployment
+
+name: Deploy to Fly.io
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch: # Allow manual deployment
+
+# Prevent multiple deployments from running simultaneously
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Deploy Application
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    # Only run on main branch
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Cache dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.bun/install/cache
+          key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lockb') }}
+          restore-keys: |
+            ${{ runner.os }}-bun-
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Run tests
+        run: |
+          bun run lint
+          bun run type-check
+          bun run test:unit
+        continue-on-error: false
+
+      - name: Setup Fly.io CLI
+        uses: superfly/flyctl-actions/setup-flyctl@master
+
+      - name: Deploy to Fly.io
+        run: flyctl deploy --remote-only --dockerfile docker/Dockerfile
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+
+      - name: Verify deployment
+        run: |
+          echo "Waiting for deployment to be ready..."
+          sleep 30
+
+          # Get app name from fly.toml
+          APP_NAME=$(grep "^app = " fly.toml | cut -d'"' -f2)
+
+          # Check health endpoint
+          HEALTH_CHECK=$(curl -f -s "https://${APP_NAME}.fly.dev/api/health" || echo "failed")
+
+          if [ "$HEALTH_CHECK" = "failed" ]; then
+            echo "Health check failed"
+            exit 1
+          fi
+
+          echo "Deployment successful and healthy!"
+          echo "Application URL: https://${APP_NAME}.fly.dev"
+
+      - name: Deployment status notification
+        if: always()
+        run: |
+          if [ "${{ job.status }}" = "success" ]; then
+            echo "✅ Deployment successful!"
+          else
+            echo "❌ Deployment failed!"
+            exit 1
+          fi
+
+      - name: Post deployment tasks
+        if: success()
+        run: |
+          # Run database migrations
+          flyctl ssh console -C "bun run db:migrate"
+
+          echo "Post-deployment tasks completed"
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        continue-on-error: true
+
+  # Create GitHub deployment
+  create-deployment:
+    name: Create GitHub Deployment
+    runs-on: ubuntu-latest
+    needs: deploy
+    if: success()
+
+    steps:
+      - name: Create deployment record
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const deployment = await github.rest.repos.createDeployment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: context.sha,
+              environment: 'production',
+              auto_merge: false,
+              required_contexts: [],
+              description: 'Deployed to Fly.io'
+            });
+
+            await github.rest.repos.createDeploymentStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              deployment_id: deployment.data.id,
+              state: 'success',
+              environment_url: 'https://your-app-name.fly.dev',
+              description: 'Deployment successful'
+            });

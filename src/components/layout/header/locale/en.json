@@ -1,0 +1,31 @@
+{
+  "header": {
+    "nav": {
+      "home": "Home",
+      "dashboard": "Dashboard",
+      "features": "Features",
+      "pricing": "Pricing",
+      "about": "About",
+      "contact": "Contact"
+    },
+    "user": {
+      "profile": "Profile",
+      "settings": "Settings",
+      "signOut": "Sign Out",
+      "signIn": "Sign In",
+      "signUp": "Sign Up"
+    },
+    "theme": {
+      "light": "Light Mode",
+      "dark": "Dark Mode",
+      "system": "System"
+    },
+    "menu": {
+      "open": "Open menu",
+      "close": "Close menu"
+    },
+    "search": {
+      "placeholder": "Search..."
+    }
+  }
+}

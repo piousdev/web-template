@@ -1,0 +1,133 @@
+{
+  "auth": {
+    "login": {
+      "title": "Welcome Back",
+      "description": "Sign in to your account to continue",
+      "form": {
+        "email": {
+          "label": "Email",
+          "placeholder": "Enter your email"
+        },
+        "password": {
+          "label": "Password",
+          "placeholder": "Enter your password",
+          "forgot": "Forgot password?"
+        },
+        "submit": {
+          "default": "Sign In",
+          "loading": "Signing in..."
+        }
+      },
+      "social": {
+        "separator": "Or continue with",
+        "github": "GitHub",
+        "google": "Google",
+        "pending": {
+          "title": "Redirecting...",
+          "description": "Taking you to sign in with your provider"
+        }
+      },
+      "success": {
+        "title": "Login successful",
+        "description": "Welcome back! Redirecting to your dashboard..."
+      },
+      "error": {
+        "title": "Login failed",
+        "description": "Invalid email or password. Please try again."
+      },
+      "footer": {
+        "noAccount": "Don't have an account?",
+        "signUp": "Sign up"
+      }
+    },
+    "register": {
+      "title": "Create an Account",
+      "description": "Sign up to get started with our platform",
+      "form": {
+        "name": {
+          "label": "Full Name",
+          "placeholder": "Enter your full name"
+        },
+        "email": {
+          "label": "Email",
+          "placeholder": "Enter your email"
+        },
+        "password": {
+          "label": "Password",
+          "placeholder": "Choose a strong password"
+        },
+        "confirmPassword": {
+          "label": "Confirm Password",
+          "placeholder": "Re-enter your password"
+        },
+        "terms": {
+          "label": "I agree to the",
+          "link": "Terms of Service",
+          "and": "and",
+          "privacy": "Privacy Policy"
+        },
+        "submit": {
+          "default": "Create Account",
+          "loading": "Creating account..."
+        }
+      },
+      "social": {
+        "separator": "Or sign up with",
+        "github": "GitHub",
+        "google": "Google"
+      },
+      "success": {
+        "title": "Account created",
+        "description": "Your account has been created successfully!"
+      },
+      "error": {
+        "title": "Registration failed",
+        "description": "Could not create account. Please try again.",
+        "passwordMismatch": "Passwords do not match",
+        "termsRequired": "You must accept the terms and conditions"
+      },
+      "footer": {
+        "haveAccount": "Already have an account?",
+        "signIn": "Sign in"
+      }
+    }
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "welcome": "Welcome back",
+    "overview": {
+      "title": "Overview",
+      "description": "Your account summary and quick stats"
+    },
+    "stats": {
+      "users": {
+        "title": "Total Users",
+        "change": "from last month"
+      },
+      "revenue": {
+        "title": "Revenue",
+        "change": "from last month"
+      },
+      "sales": {
+        "title": "Sales",
+        "change": "from last month"
+      },
+      "active": {
+        "title": "Active Now",
+        "change": "from last hour"
+      }
+    },
+    "recentActivity": {
+      "title": "Recent Activity",
+      "description": "Your latest actions and updates",
+      "empty": "No recent activity to display"
+    },
+    "quickActions": {
+      "title": "Quick Actions",
+      "newProject": "New Project",
+      "invite": "Invite Team",
+      "settings": "Settings",
+      "support": "Get Support"
+    }
+  }
+}
