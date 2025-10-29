@@ -6,9 +6,10 @@ A production-ready Next.js + TypeScript boilerplate designed for applications se
 
 ### Core
 - **Framework**: Next.js 16 (App Router)
-- **Language**: TypeScript
+- **Language**: TypeScript (Strict Mode)
 - **Package Manager**: Bun
-- **Styling**: CSS Modules
+- **Styling**: Tailwind CSS v4 + shadcn/ui (53 components)
+- **Internationalization**: next-intl
 
 ### Database & ORM
 - **Database**: Neon PostgreSQL (serverless)
@@ -16,38 +17,45 @@ A production-ready Next.js + TypeScript boilerplate designed for applications se
 - **Migrations**: Drizzle Kit
 
 ### Authentication & Session
-- **Auth**: Better Auth
+- **Auth**: Better Auth v1.3
 - **Session Store**: Redis (Upstash)
 
 ### State Management
 - **Server State**: TanStack Query (React Query)
-- **Client State**: Zustand
+- **Client State**: Zustand with localStorage persistence
 
 ### Real-time
 - **WebSockets**: Socket.io
 
 ### External Services
 - **Email**: Resend
-- **Payments**: Stripe
+- **Payments**: Polar (Merchant of Record - handles global tax compliance)
 - **Storage**: Cloudflare R2 (S3-compatible)
 - **Error Tracking**: Sentry
 - **Queue**: Bull + Redis
 
 ### Testing
-- **Unit Tests**: Vitest + Testing Library
+- **Unit Tests**: Vitest + React Testing Library
 - **E2E Tests**: Playwright
 - **Load Tests**: k6
 
 ### Code Quality
 - **Linter/Formatter**: Biome
-- **Type Checking**: TypeScript strict mode
+- **Type Checking**: TypeScript strict mode (zero errors)
+- **Pre-commit Hooks**: Husky + lint-staged
+- **Commit Convention**: Conventional Commits with commitlint
 
 ### Deployment
 - **Platform**: Fly.io (multi-region)
 - **CI/CD**: GitHub Actions
-- **Containerization**: Docker
+- **Containerization**: Docker (multi-stage builds)
 
 ## Getting Started
+
+> 📖 **For comprehensive documentation**, see:
+> - **[docs/PROJECT-CONTEXT.md](docs/PROJECT-CONTEXT.md)** - Architecture, stack details, and principles
+> - **[docs/QUICK-START.md](docs/QUICK-START.md)** - Detailed setup and workflow guide
+> - **[docs/DEPENDENCIES.md](docs/DEPENDENCIES.md)** - All dependencies with removal guides
 
 ### Prerequisites
 
@@ -155,18 +163,19 @@ RESEND_API_KEY=re_xxx
 2. Verify your domain
 3. Get API key from dashboard
 
-### Payments - Stripe (Optional)
+### Payments - Polar (Optional)
 ```env
-STRIPE_SECRET_KEY=sk_live_xxx
-STRIPE_PUBLISHABLE_KEY=pk_live_xxx
-STRIPE_WEBHOOK_SECRET=whsec_xxx
-NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_live_xxx
+POLAR_API_KEY=xxx
+NEXT_PUBLIC_POLAR_ORG_ID=xxx
+POLAR_WEBHOOK_SECRET=whsec_polar_xxx
+NEXT_PUBLIC_POLAR_CHECKOUT_URL=https://checkout.polar.sh
 ```
 
 **Setup**:
-1. Sign up at [Stripe](https://stripe.com)
-2. Get API keys from dashboard
-3. Setup webhooks and get webhook secret
+1. Sign up at [Polar](https://polar.sh)
+2. Get API key from dashboard
+3. Get your organization ID
+4. Setup webhooks and get webhook secret
 
 ### Storage - Cloudflare R2 (Optional)
 ```env
@@ -242,11 +251,11 @@ bun run db:studio    # Open Drizzle Studio
 │   │   ├── layout.tsx     # Root layout
 │   │   └── page.tsx       # Home page
 │   ├── components/        # React components
+│   │   ├── shadcn/ui/    # shadcn/ui components (53 components)
 │   │   ├── button/
 │   │   │   ├── index.tsx           # Component
-│   │   │   ├── button.types.ts     # Types
-│   │   │   ├── button.test.tsx     # Unit tests
-│   │   │   ├── styles.module.css   # Styles
+│   │   │   ├── types.ts            # Types
+│   │   │   ├── index.test.tsx      # Unit tests
 │   │   │   └── locale/en.json      # i18n
 │   │   └── ...
 │   ├── hooks/             # Custom React hooks
